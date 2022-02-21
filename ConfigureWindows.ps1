@@ -1,24 +1,16 @@
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
 $url = "https://raw.githubusercontent.com/jborean93/ansible-windows/master/scripts/Install-WMF3Hotfix.ps1"
 $file = "$env:temp\Install-WMF3Hotfix.ps1"
-
-
-[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 (New-Object -TypeName System.Net.WebClient).DownloadFile($url, $file)
 powershell.exe -ExecutionPolicy ByPass -File $file -Verbose
 
-$url = https://raw.githubusercontent.com/jborean93/ansible-windows/master/scripts/Upgrade-PowerShell.ps1
+
+$url = "https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1"
 $file = "$env:temp\ConfigureRemotingForAnsible.ps1"
-
 (New-Object -TypeName System.Net.WebClient).DownloadFile($url, $file)
+powershell.exe -ExecutionPolicy ByPass -File $file -EnableCredSSP -ForceNewSSLCert -CertValidityDays 3650
 
-powershell.exe -ExecutionPolicy ByPass -File $file -Verbose -EnableCredSSP -ForceNewSSLCert -CertValidityDays 3650
-
-rm $file
-
-
-$profile = Get-NetConnectionProfile
-Set-NetworkConnectionProfile -Name $Profile.Name -NetworkCategory Private
 
 powershell.exe /c "powercfg /change monitor-timeout-ac 0"
 powershell.exe /c "powercfg /change standby-timout-ac 0"
