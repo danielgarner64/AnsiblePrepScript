@@ -13,8 +13,8 @@ powershell.exe -ExecutionPolicy ByPass -File $file -EnableCredSSP -ForceNewSSLCe
 
 
 powershell.exe /c "powercfg /change monitor-timeout-ac 0"
-powershell.exe /c "powercfg /change standby-timout-ac 0"
-powershell.exe /c "sc.exe config WinRM start=auto"
+powershell.exe /c "powercfg /change standby-timeout-ac 0"
+powershell.exe /c "sc.exe config WinRM start= auto"
 
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Force
 
